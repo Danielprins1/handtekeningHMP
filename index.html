@@ -81,15 +81,16 @@
     {name:'Alfie de Vries', role:'Co-owner', phoneD:'+31 6 11004547', phoneT:'+31611004547', email:'alphons@holymoly.pizza'},
     {name:'Galit Bauer', role:'General Manager', phoneD:'+31 6 17292579', phoneT:'+31617292579', email:'gb@holymoly.pizza'},
     {name:'Cammie Andrewsova', role:'Operational support and content coordinator', phoneD:'+34 607 061 450', phoneT:'+34607061450', email:'ca@holymoly.pizza'},
-    {name:'Dani\u00ebl Prins', role:'Marketing', phoneD:'', phoneT:'', email:'marketing@holymoly.pizza'}
+    {name:'Daniël Prins', role:'Marketing', phoneD:'', phoneT:'', email:'marketing@holymoly.pizza'},
+    {name:'Leon', role:'Sales', phoneD:'+31 6 37664270', phoneT:'+31637664270', email:'lv@holymoly.pizza'}
   ];
   var logoAbs = new URL('holymoly-logo.png', window.location.href).href;
   var current = 0;
 
   function sigTable(p, logo){
-    var phone = p.phoneD
-      ? '      <div style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#1a1a1a; line-height:1.55;"><a href="tel:'+p.phoneT+'" style="color:#1a1a1a; text-decoration:none;">'+p.phoneD+'</a></div>\n'
-      : '';
+    var role = p.role ? '      <div style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#1a1a1a; letter-spacing:1.2px; text-transform:uppercase; padding-top:5px;">'+p.role+'</div>\n' : '';
+    var phone = p.phoneD ? '      <div style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#1a1a1a; line-height:1.55;"><a href="tel:'+p.phoneT+'" style="color:#1a1a1a; text-decoration:none;">'+p.phoneD+'</a></div>\n' : '';
+    var email = p.email ? '      <div style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#1a1a1a; line-height:1.55;"><a href="mailto:'+p.email+'" style="color:#1a1a1a; text-decoration:none;">'+p.email+'</a></div>\n' : '';
     return ''+
 '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; color:#1a1a1a;">\n'+
 '  <tr>\n'+
@@ -99,10 +100,9 @@
 '    <td valign="middle" style="width:2px; background-color:#AF2C2B; font-size:0; line-height:0;">&nbsp;</td>\n'+
 '    <td valign="middle" style="padding:0 0 0 22px;">\n'+
 '      <div style="font-family:Arial, Helvetica, sans-serif; font-size:23px; font-weight:bold; color:#AF2C2B; letter-spacing:0.5px; line-height:1.1; text-transform:uppercase;">'+p.name+'</div>\n'+
-'      <div style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#1a1a1a; letter-spacing:1.2px; text-transform:uppercase; padding-top:5px;">'+p.role+'</div>\n'+
+role+
 '      <div style="height:16px; line-height:16px; font-size:0;">&nbsp;</div>\n'+
-phone+
-'      <div style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#1a1a1a; line-height:1.55;"><a href="mailto:'+p.email+'" style="color:#1a1a1a; text-decoration:none;">'+p.email+'</a></div>\n'+
+phone+email+
 '      <div style="height:16px; line-height:16px; font-size:0;">&nbsp;</div>\n'+
 '      <div style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#1a1a1a; line-height:1.55;"><a href="https://www.holymoly.pizza" style="color:#1a1a1a; text-decoration:none;">www.holymoly.pizza</a><span style="display:inline-block; width:28px;">&nbsp;</span><a href="https://instagram.com/holymoly.pizza" style="color:#1a1a1a; text-decoration:none;">@holymoly.pizza</a></div>\n'+
 '    </td>\n'+
@@ -126,21 +126,15 @@ phone+
   }
   function select(i){
     current = i;
-    Array.prototype.forEach.call(pills.children, function(el, idx){
-      el.className = 'pill' + (idx===i?' active':'');
-    });
+    Array.prototype.forEach.call(pills.children, function(el, idx){ el.className = 'pill' + (idx===i?' active':''); });
     render();
   }
   render();
 
   async function copyRich(html){
     try{
-      var item = new ClipboardItem({
-        'text/html': new Blob([html], {type:'text/html'}),
-        'text/plain': new Blob([html], {type:'text/plain'})
-      });
-      await navigator.clipboard.write([item]);
-      return true;
+      var item = new ClipboardItem({ 'text/html': new Blob([html], {type:'text/html'}), 'text/plain': new Blob([html], {type:'text/plain'}) });
+      await navigator.clipboard.write([item]); return true;
     }catch(e){
       try{ await navigator.clipboard.writeText(html); return true; }catch(e2){ return false; }
     }
@@ -148,8 +142,7 @@ phone+
 
   var copyBtn = document.getElementById('copyBtn');
   copyBtn.addEventListener('click', async function(){
-    var html = sigTable(people[current], logoAbs);
-    var ok = await copyRich(html);
+    var ok = await copyRich(sigTable(people[current], logoAbs));
     var old = copyBtn.textContent;
     copyBtn.textContent = ok ? 'Gekopieerd, nu plakken met Cmd+V' : 'Kopieren mislukt, gebruik de code hieronder';
     copyBtn.classList.toggle('ok', ok);

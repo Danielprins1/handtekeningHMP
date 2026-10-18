@@ -6,8 +6,7 @@ Statische hosting voor de e-mailhandtekeningen van Holy Moly Pizza.
 
 - `index.html` de pagina met alle personen, keuzemenu en kopieerknop
 - `holymoly-logo.png` het logo, 300x300 met transparante hoeken
-- `handtekening-alfie.html`, `handtekening-galit.html`, `handtekening-cammie.html`, `handtekening-daniel.html` losse bestanden per persoon
-- `holymoly-signature.html` het oorspronkelijke losse bestand van Alfie
+- `handtekening-alfie.html`, `handtekening-galit.html`, `handtekening-cammie.html`, `handtekening-daniel.html`, `handtekening-leon.html` losse bestanden per persoon
 - `README.md` dit bestand
 
 ## Personen
@@ -16,6 +15,7 @@ Statische hosting voor de e-mailhandtekeningen van Holy Moly Pizza.
 - Galit Bauer, General Manager
 - Cammie Andrewsova, Operational support and content coordinator
 - Daniel Prins, Marketing
+- Leon
 
 ## Gebruik
 
